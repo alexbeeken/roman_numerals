@@ -2,21 +2,45 @@ var romanNumerals = function(number) {
   var output = [];
   var remaining = number;
 
+  var values = [1, 10, 100, 1000];
+
+  var split_number = [0, 0, 0, 0];
+
+  for (var i = 0; i < 4; i++) {
+
+    split_number[i] = Math.floor((number / values[i]) % 10);
+
+    if (split_number[i] != 0) {
+      output.unshift(numeralForDigit(split_number[i], i));
+    };
+  };
+  return output.join("");
+};
+
+var numeralForDigit = function(digit, num_of_zeros) {
+  var numeral_array = [];
   var numerals = ["M", "D", "C", "L", "X", "V", "I"];
   var values = [1000,500,100,50,10,5,1];
 
-for (var x = 0; x < numerals.length; x++) {
-  if (remaining >= values[x]) {
-    debugger;
-   for (var i = (remaining % values[x]); i < remaining; i = i + values[x]) {
-      output.push(numerals[x]);
-    };
-    remaining = remaining % values[x];
-  } else if ((remaining === (values[x]-1)) && (remaining > 0)) {
-      output.push(numerals[numerals.length-1]);
-      output.push(numerals[x]);
-      remaining = 0;
+  var low_symbol = numerals[(values.length - (num_of_zeros * 2)) - 1];
+  var mid_symbol = numerals[(values.length - (num_of_zeros * 2)) - 2];
+  var high_symbol = numerals[(values.length - (num_of_zeros * 2)) - 3];
+
+
+  if (digit < 4) {
+      for (var i = digit; i > 0; i--) {
+        numeral_array.push(low_symbol);
+      };
+  } else if (digit === 4) {
+      numeral_array.push(low_symbol.concat(mid_symbol));
+  } else if (digit <9) {
+      numeral_array.push(mid_symbol);
+      for (var i = (digit - 5); i > 0; i--) {
+        numeral_array.push(low_symbol);
+      };
+  } else {
+      numeral_array.push(low_symbol.concat(high_symbol));
   }
-};
-return output.join("");
+
+  return numeral_array.join("");
 };

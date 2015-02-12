@@ -49,5 +49,9 @@ describe("#romanNumerals",function(){
 
   it('Returns a XC for 90', function() {
     expect(romanNumerals(90)).to.equal("XC");
-  })
+  });
+
+  it('Returns a CMXCIX for 999', function() {
+    expect(romanNumerals(999)).to.equal("CMXCIX");
+  });
 });
