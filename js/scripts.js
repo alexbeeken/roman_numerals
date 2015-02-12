@@ -44,3 +44,15 @@ var numeralForDigit = function(digit, num_of_zeros) {
 
   return numeral_array.join("");
 };
+
+$(document).ready(function(){
+  $("form#romanNumerals").submit(function(event){
+    var number = $("input#number").val();
+    var result = romanNumerals(number);
+
+    $("#romannumeral").text(result);
+
+    $(".result").show();
+    event.preventDefault();
+  });
+});
